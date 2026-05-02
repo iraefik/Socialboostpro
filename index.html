@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوشيال بوست برو - نمو حسابات التواصل الاجتماعي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff0080;
+            --primary-dark: #d6006e;
+            --secondary: #ff6b00;
+            --accent: #00d4ff;
+            --dark: #0a0a0f;
+            --darker: #050508;
+            --card: #12121a;
+            --text: #ffffff;
+            --text-muted: #a0a0b0;
+            --gradient-1: linear-gradient(135deg, #ff0080 0%, #ff6b00 100%);
+            --gradient-2: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--darker);
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 107, 0, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(121, 40, 202, 0.05) 0%, transparent 50%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, 2%) rotate(1deg); }
+            66% { transform: translate(-1%, 1%) rotate(-1deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            background: rgba(5, 5, 8, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 0.7rem 1.8rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            animation: pulse 2s infinite;
+            font-weight: 700;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 128, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 0, 128, 0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .hero h1 span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 1rem 2.5rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 128, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(255, 0, 128, 0.1);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            padding: 3rem 5%;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            font-weight: 600;
+        }
+
+        /* Platforms Section */
+        .platforms {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .section-title span {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .platform-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .platform-card {
+            width: 150px;
+            height: 150px;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .platform-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .platform-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255, 0, 128, 0.2);
+        }
+
+        .platform-card i {
+            font-size: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .platform-card span {
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .instagram { color: #e4405f; }
+        .facebook { color: #1877f2; }
+        .tiktok { color: #ffffff; }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 5%;
+        }
+
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .tab-btn.active {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.3);
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+            transform-origin: right;
+        }
+
+        .pricing-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 0, 128, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 15px;
+            left: -30px;
+            background: var(--gradient-1);
+            padding: 0.3rem 2.5rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            transform: rotate(-45deg);
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .package-name {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .package-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .package-price {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            font-family: 'Poppins', sans-serif;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        .package-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .package-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: right;
+        }
+
+        .package-features li {
+            padding: 0.5rem 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .package-features li i {
+            color: #00d26a;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .order-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s;
+            text-align: right;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 128, 0.3);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 800;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.9;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .contact-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 128, 0.1) 0%, transparent 70%);
+        }
+
+        .contact-box h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .contact-btn:hover {
+            background: var(--gradient-1);
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .contact-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Payments */
+        .payments {
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .payments h3 {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .payment-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .payment-icon i {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .stats-bar { gap: 2rem; }
+            .pricing-card.popular { transform: scale(1); }
+            .pricing-card.popular:hover { transform: translateY(-10px); }
+            .hero h1 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#contact" class="nav-cta">ابدأ الآن</a>
+        <ul class="nav-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#pricing">الأسعار</a></li>
+            <li><a href="#features">المميزات</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+        <div class="logo">
+            <i class="fas fa-rocket"></i>
+            سوشيال بوست برو
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                توصيل فوري - دعم على مدار الساعة
+            </div>
+            <h1>عزز حضورك على <span>مواقع التواصل الاجتماعي</span> اليوم</h1>
+            <p>احصل على متابعين وإعجابات حقيقية لإنستغرام، فيسبوك وتيك توك. نمو سريع وآمن وبأسعار منافسة لعلامتك التجارية.</p>
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    اطلع على الأسعار
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    <i class="fab fa-whatsapp"></i>
+                    تواصل معنا
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">50K+</div>
+            <div class="stat-label">طلب مكتمل</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">99%</div>
+            <div class="stat-label">معدل الرضا</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">دعم العملاء</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">0-5د</div>
+            <div class="stat-label">وقت التوصيل</div>
+        </div>
+    </div>
+
+    <!-- Platforms -->
+    <section class="platforms">
+        <h2 class="section-title fade-in">المنصات <span>المدعومة</span></h2>
+        <p class="section-subtitle fade-in">نوفر خدمات النمو لأكبر منصات التواصل الاجتماعي في العالم</p>
+        <div class="platform-grid">
+            <div class="platform-card fade-in">
+                <i class="fab fa-instagram instagram"></i>
+                <span>إنستغرام</span>
+            </div>
+            <div class="platform-card fade-in">
+                <i class="fab fa-facebook facebook"></i>
+                <span>فيسبوك</span>
+            </div>
+            <div class="platform-card fade-in">
+                <i class="fab fa-tiktok tiktok"></i>
+                <span>تيك توك</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <h2 class="section-title fade-in">اختر <span>باقتك</span></h2>
+        <p class="section-subtitle fade-in">اختر الخدمة التي تحتاجها واختر الباقة المثالية لنمو حسابك</p>
+
+        <div class="pricing-tabs">
+            <button class="tab-btn active" onclick="switchTab('followers')">
+                <i class="fas fa-users"></i> متابعين
+            </button>
+            <button class="tab-btn" onclick="switchTab('likes')">
+                <i class="fas fa-heart"></i> إعجابات
+            </button>
+        </div>
+
+        <!-- Followers Pricing -->
+        <div class="pricing-grid" id="followers-pricing">
+            <div class="pricing-card fade-in">
+                <div class="package-name">البداية</div>
+                <div class="package-desc">مثالية للمبتدئين</div>
+                <div class="package-price">$2.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 1,000 متابع حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم على مدار الساعة</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%201000%20متابع%20بسعر%20$2.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="package-name">النمو</div>
+                <div class="package-desc">الخيار الأكثر شيوعاً</div>
+                <div class="package-price">$12.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 5,000 متابع حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم على مدار الساعة</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%205000%20متابع%20بسعر%20$12.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card popular fade-in">
+                <div class="popular-badge">الأكثر مبيعاً</div>
+                <div class="package-name">الاحترافية</div>
+                <div class="package-desc">أفضل قيمة</div>
+                <div class="package-price">$23.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 10,000 متابع حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم أولوي</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%2010000%20متابع%20بسعر%20$23.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="package-name">الشهرة</div>
+                <div class="package-desc">التأثير الأقصى</div>
+                <div class="package-price">$119.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 50,000 متابع حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم VIP</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%2050000%20متابع%20بسعر%20$119.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+        </div>
+
+        <!-- Likes Pricing (Hidden by default) -->
+        <div class="pricing-grid" id="likes-pricing" style="display: none;">
+            <div class="pricing-card fade-in">
+                <div class="package-name">البداية</div>
+                <div class="package-desc">مثالية للمبتدئين</div>
+                <div class="package-price">$0.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 1,000 إعجاب حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم على مدار الساعة</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%201000%20إعجاب%20بسعر%20$0.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="package-name">النمو</div>
+                <div class="package-desc">الخيار الأكثر شيوعاً</div>
+                <div class="package-price">$3.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 5,000 إعجاب حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم على مدار الساعة</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%205000%20إعجاب%20بسعر%20$3.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card popular fade-in">
+                <div class="popular-badge">الأكثر مبيعاً</div>
+                <div class="package-name">الاحترافية</div>
+                <div class="package-desc">أفضل قيمة</div>
+                <div class="package-price">$7.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 10,000 إعجاب حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم أولوي</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%2010000%20إعجاب%20بسعر%20$7.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+            <div class="pricing-card fade-in">
+                <div class="package-name">الشهرة</div>
+                <div class="package-desc">التأثير الأقصى</div>
+                <div class="package-price">$28.99</div>
+                <ul class="package-features">
+                    <li><i class="fas fa-check"></i> 50,000 إعجاب حقيقي</li>
+                    <li><i class="fas fa-check"></i> بدء فوري</li>
+                    <li><i class="fas fa-check"></i> لا يحتاج كلمة سر</li>
+                    <li><i class="fas fa-check"></i> دعم VIP</li>
+                </ul>
+                <a href="https://wa.me/213542379766?text=مرحباً!%20أريد%20طلب%2050000%20إعجاب%20بسعر%20$28.99" class="order-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> اطلب الآن
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title fade-in">لماذا <span>نحن؟</span></h2>
+        <p class="section-subtitle fade-in">نقدم أفضل تجربة نمو لحسابات التواصل الاجتماعي مع مميزات احترافية</p>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                <h3>توصيل فوري</h3>
+                <p>يبدأ معالجة طلبك خلال دقائق. لا انتظار، لا تأخير. احصل على متابعيك وإعجاباتك بسرعة فائقة.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>100% آمن ومحمي</h3>
+                <p>لا نطلب كلمة السر أبداً. أمان حسابك هو أولويتنا القصوى. طرق آمنة فقط.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                <h3>دعم على مدار الساعة</h3>
+                <p>فريقنا متواجد دائماً لمساعدتك. تواصل معنا في أي وقت عبر واتساب أو تيليغرام للحصول على مساعدة فورية.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-tags"></i></div>
+                <h3>أفضل الأسعار</h3>
+                <p>أسعار تنافسية دون المساس بالجودة. احصل على أفضل قيمة لأموالك مع باقاتنا المتنوعة.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-undo"></i></div>
+                <h3>ضمان إعادة التعبئة</h3>
+                <p>إذا حدث أي انخفاض خلال 30 يوماً، نعيد تعبئته مجاناً. رضاك مضمون.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon"><i class="fas fa-globe"></i></div>
+                <h3>خدمة عالمية</h3>
+                <p>نخدم عملاء من جميع أنحاء العالم. أينما كنت، نحن في خدمتك.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-box">
+            <h2>مستعد <span style="background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">للنمو؟</span></h2>
+            <p>تواصل معنا الآن وابدأ بتعزيز حضورك على مواقع التواصل. نقرة واحدة تفصلك عن الشهرة!</p>
+            <div class="contact-methods">
+                <a href="https://wa.me/213542379766" class="contact-btn" target="_blank">
+                    <i class="fab fa-whatsapp" style="color: #25d366;"></i>
+                    واتساب
+                </a>
+                <a href="https://t.me/+213542379766" class="contact-btn" target="_blank">
+                    <i class="fab fa-telegram" style="color: #0088cc;"></i>
+                    تيليغرام
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payments -->
+    <section class="payments">
+        <h3>طرق الدفع المقبولة</h3>
+        <div class="payment-icons">
+            <div class="payment-icon">
+                <i class="fab fa-cc-paypal" style="color: #003087;"></i>
+                باي بال
+            </div>
+            <div class="payment-icon">
+                <i class="fas fa-coins" style="color: #f0b90b;"></i>
+                باينانس
+            </div>
+            <div class="payment-icon">
+                <i class="fas fa-money-bill-wave" style="color: #85bb65;"></i>
+                كاش
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p> 2026 سوشيال بوست برو. جميع الحقوق محفوظة. | نمو سريع وآمن وموثوق لحسابات التواصل الاجتماعي</p>
+    </footer>
+
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            particle.style.width = (2 + Math.random() * 4) + 'px';
+            particle.style.height = particle.style.width;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            const followersGrid = document.getElementById('followers-pricing');
+            const likesGrid = document.getElementById('likes-pricing');
+            const tabs = document.querySelectorAll('.tab-btn');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.closest('.tab-btn').classList.add('active');
+
+            if (tab === 'followers') {
+                followersGrid.style.display = 'grid';
+                likesGrid.style.display = 'none';
+            } else {
+                followersGrid.style.display = 'none';
+                likesGrid.style.display = 'grid';
+            }
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
